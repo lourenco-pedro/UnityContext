@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace ContextSystem
@@ -23,9 +22,10 @@ namespace ContextSystem
             {
                 try
                 {
-                    accumulatedContextDatas.AddRange(
-                            ctx.GetContextDatas()
-                            .ToDictionary(data => data.GetType().Name, data => data));
+                    foreach (var data in ctx.GetContextDatas())
+                    {
+                        accumulatedContextDatas[data.GetType().Name] = data;
+                    }
                 }
                 catch(Exception e)
                 {
@@ -62,7 +62,10 @@ namespace ContextSystem
                 Dictionary<string, IContextData> accumulatedContextDatas = new Dictionary<string, IContextData>();
                 foreach (var ctx in _stackedContexts)
                 {
-                    accumulatedContextDatas.AddRange(ctx.GetContextDatas().ToDictionary(data => data.GetType().Name, data => data));
+                    foreach (var data in ctx.GetContextDatas())
+                    {
+                        accumulatedContextDatas[data.GetType().Name] = data;
+                    }
                 }
                 
                 TContextModel context = new TContextModel();
