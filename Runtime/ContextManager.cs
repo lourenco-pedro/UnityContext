@@ -1,9 +1,6 @@
-using R3;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
-using UnityEngine;
 
 namespace ContextSystem
 {
@@ -40,9 +37,7 @@ namespace ContextSystem
         
         public static void Tick()
         {
-            _disposableEveryUpdate = Observable
-                .EveryUpdate(UnityFrameProvider.Update)
-                .Subscribe(_ => ForeachUpdateOfStackedContexts());
+            ForeachUpdateOfStackedContexts();
         }
 
         public static void Terminate()
