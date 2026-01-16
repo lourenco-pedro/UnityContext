@@ -228,9 +228,8 @@ public class MainMenuContext : BaseContext
 
 ## Dependencies
 
-- R3 (Reactive Extensions for Unity)
 - Unity 2021.3 or later
 
 ## License
 
-[Your License Here]
+MIT License
