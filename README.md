@@ -15,7 +15,7 @@ A flexible context management system for Unity that provides a structured way to
 Add this package to your Unity project using the Package Manager with Git URL:
 1. Open Window > Package Manager
 2. Click the + button and select "Add package from git URL..."
-3. Enter the following URL: `https://github.com/lourenco-pedro/UnityServiceSystem.git`
+3. Enter the following URL: `https://github.com/lourenco-pedro/UnityContext.git`
 4. Click "Add" and Unity will download and install the package
 
 ## Usage
