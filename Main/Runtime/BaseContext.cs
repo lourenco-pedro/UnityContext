@@ -9,7 +9,7 @@ namespace ppl.ContextSystem
         public abstract void Update(ContextArgs args);
         public abstract void Dispose();
 
-        public void RegisterContexData(IContextData contextData)
+        public void RegisterContextData(IContextData contextData)
         {
             _contextData = contextData;
         }
