@@ -1,6 +1,6 @@
 {
   "name": "com.ppl.unitycontext",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "displayName": "Unity Context System",
   "description": "A context management system for Unity that provides a flexible way to handle application state and data flow through context stacks.",
   "unity": "2021.3",
