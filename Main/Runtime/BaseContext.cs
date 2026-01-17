@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ContextSystem
+namespace ppl.ContextSystem
 {
     public abstract class BaseContext : IContext
     {

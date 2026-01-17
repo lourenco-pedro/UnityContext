@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ContextSystem
+namespace ppl.ContextSystem
 {
     public struct ContextArgs
     {

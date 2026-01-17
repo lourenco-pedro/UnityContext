@@ -1,4 +1,4 @@
-namespace ContextSystem
+namespace ppl.ContextSystem
 {
     public interface IContext
     {

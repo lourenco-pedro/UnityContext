@@ -1,4 +1,4 @@
-namespace ContextSystem.Exceptions
+namespace ppl.ContextSystem.Exceptions
 {
     public class MissingContextArgument : System.Exception
     {
