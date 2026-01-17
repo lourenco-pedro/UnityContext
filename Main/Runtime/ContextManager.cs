@@ -59,7 +59,9 @@ namespace ppl.ContextSystem
                 Dictionary<string, IContextData> accumulatedContextDatas = new Dictionary<string, IContextData>();
                 foreach (var ctx in _stackedContexts)
                 {
-                    accumulatedContextDatas[ctx.GetContextData().GetType().Name] = ctx.GetContextData();
+                    IContextData data = ctx.GetContextData();
+                    if (data != null)
+                        accumulatedContextDatas[data.GetType().Name] = data;
                 }
                 
                 TContextModel context = new TContextModel();
