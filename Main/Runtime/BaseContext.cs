@@ -1,28 +1,22 @@
 using System.Collections.Generic;
-using System.Linq;
-
 namespace ppl.ContextSystem
 {
     public abstract class BaseContext : IContext
     {
-        private readonly Dictionary<string, IContextData> _contextDatas = new Dictionary<string, IContextData>();
+        private IContextData _contextData = null;
 
         public abstract void Start(ContextArgs args);
         public abstract void Update(ContextArgs args);
         public abstract void Dispose();
 
-        public void RegisterContexData(params IContextData[] contextData)
+        public void RegisterContexData(IContextData contextData)
         {
-            foreach (IContextData data in contextData)
-            {
-                string name = data.GetType().Name;
-                _contextDatas[name] = data;
-            }
+            _contextData = contextData;
         }
         
-        public IContextData[] GetContextDatas()
+        public IContextData GetContextData()
         {
-            return _contextDatas.Values.ToArray();
+            return _contextData;
         }
     }
 }

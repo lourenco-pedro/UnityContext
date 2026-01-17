@@ -22,10 +22,7 @@ namespace ppl.ContextSystem
             {
                 try
                 {
-                    foreach (var data in ctx.GetContextDatas())
-                    {
-                        accumulatedContextDatas[data.GetType().Name] = data;
-                    }
+                    accumulatedContextDatas[ctx.GetContextData().GetType().Name] = ctx.GetContextData();
                 }
                 catch(Exception e)
                 {
@@ -62,10 +59,7 @@ namespace ppl.ContextSystem
                 Dictionary<string, IContextData> accumulatedContextDatas = new Dictionary<string, IContextData>();
                 foreach (var ctx in _stackedContexts)
                 {
-                    foreach (var data in ctx.GetContextDatas())
-                    {
-                        accumulatedContextDatas[data.GetType().Name] = data;
-                    }
+                    accumulatedContextDatas[ctx.GetContextData().GetType().Name] = ctx.GetContextData();
                 }
                 
                 TContextModel context = new TContextModel();
