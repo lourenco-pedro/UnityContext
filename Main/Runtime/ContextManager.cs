@@ -63,6 +63,7 @@ namespace ppl.ContextSystem
                 }
                 
                 TContextModel context = new TContextModel();
+                _stackedContexts.Add(context);
 
                 if (null != contextData)
                 {
@@ -71,8 +72,6 @@ namespace ppl.ContextSystem
                 }
 
                 context.Start(new ContextArgs(accumulatedContextDatas));
-                
-                _stackedContexts.Add(context);
             }
             catch(Exception e)
             {
