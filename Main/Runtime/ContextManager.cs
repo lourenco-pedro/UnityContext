@@ -22,11 +22,13 @@ namespace ppl.ContextSystem
             {
                 try
                 {
-                    accumulatedContextDatas[ctx.GetContextData().GetType().Name] = ctx.GetContextData();
+                    IContextData data = ctx.GetContextData();
+                    if (data != null)
+                        accumulatedContextDatas[data.GetType().Name] = data;
                 }
                 catch(Exception e)
                 {
-                    Debug.LogError("Could not spread context data. Error bellow");
+                    Debug.LogError("Could not spread context data. Error below");
                     Debug.LogException(e);
                 }
                 
@@ -69,7 +71,7 @@ namespace ppl.ContextSystem
 
                 if (null != contextData)
                 {
-                    context.RegisterContexData(contextData);
+                    context.RegisterContextData(contextData);
                     accumulatedContextDatas.Add(contextData.GetType().Name, contextData);
                 }
 
@@ -77,7 +79,7 @@ namespace ppl.ContextSystem
             }
             catch(Exception e)
             {
-                Debug.LogError("Could not spread context data. Error bellow");
+                Debug.LogError("Could not spread context data. Error below");
                 Debug.LogException(e);
             }
             
