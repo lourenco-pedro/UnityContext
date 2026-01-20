@@ -16,24 +16,20 @@ namespace ppl.ContextSystem
 
         private static void ForeachUpdateOfStackedContexts()
         {
+
+            if (_stackedContexts.Count == 0)
+                return;
+
             Dictionary<string, IContextData> accumulatedContextDatas = new Dictionary<string, IContextData>();
             
             foreach (var ctx in _stackedContexts)
             {
-                try
-                {
-                    IContextData data = ctx.GetContextData();
-                    if (data != null)
-                        accumulatedContextDatas[data.GetType().Name] = data;
-                }
-                catch(Exception e)
-                {
-                    Debug.LogError("Could not spread context data. Error below");
-                    Debug.LogException(e);
-                }
-                
-                ctx.Update(new ContextArgs(accumulatedContextDatas));
+                var data = ctx.GetContextData();
+                if (data != null)
+                    accumulatedContextDatas[data.GetType().Name] = data;
             }
+
+            _stackedContexts.Last().Update(new ContextArgs(accumulatedContextDatas));
         }
         
         public static void Tick()
@@ -50,10 +46,10 @@ namespace ppl.ContextSystem
         where TContextModel : IContext, new()
         {
             PopContext();
-            PushContext<TContextModel>(contextData);
+            PushContext<TContextModel>(contextData, false);
         }
 
-        public static void PushContext<TContextModel>(IContextData contextData = null)
+        public static void PushContext<TContextModel>(IContextData contextData = null, bool disposeCurrent = false)
         where TContextModel : IContext, new()
         {
             try
@@ -74,6 +70,9 @@ namespace ppl.ContextSystem
                     context.RegisterContextData(contextData);
                     accumulatedContextDatas.Add(contextData.GetType().Name, contextData);
                 }
+                
+                if(disposeCurrent && _stackedContexts.Count > 0)
+                    _stackedContexts[^2].Dispose();
 
                 context.Start(new ContextArgs(accumulatedContextDatas));
             }
