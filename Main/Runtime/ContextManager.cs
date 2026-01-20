@@ -8,9 +8,9 @@ namespace ppl.ContextSystem
     public static class ContextManager
     {
         private static IDisposable _disposableEveryUpdate;
-        
+
         private static List<IContext> _stackedContexts = new List<IContext>();
-        
+
         public static string CurrentContext => _stackedContexts.Count == 0 ? string.Empty : _stackedContexts.Last().GetType().Name;
         public static bool Initialized => _disposableEveryUpdate != null;
 
@@ -21,7 +21,7 @@ namespace ppl.ContextSystem
                 return;
 
             Dictionary<string, IContextData> accumulatedContextDatas = new Dictionary<string, IContextData>();
-            
+
             foreach (var ctx in _stackedContexts)
             {
                 var data = ctx.GetContextData();
@@ -31,7 +31,7 @@ namespace ppl.ContextSystem
 
             _stackedContexts.Last().Update(new ContextArgs(accumulatedContextDatas));
         }
-        
+
         public static void Tick()
         {
             ForeachUpdateOfStackedContexts();
@@ -41,7 +41,7 @@ namespace ppl.ContextSystem
         {
             _disposableEveryUpdate?.Dispose();
         }
-        
+
         public static void SwitchContext<TContextModel>(IContextData contextData = null)
         where TContextModel : IContext, new()
         {
@@ -57,11 +57,11 @@ namespace ppl.ContextSystem
                 Dictionary<string, IContextData> accumulatedContextDatas = new Dictionary<string, IContextData>();
                 foreach (var ctx in _stackedContexts)
                 {
-                    IContextData data = ctx.GetContextData();
+                    var data = ctx.GetContextData();
                     if (data != null)
                         accumulatedContextDatas[data.GetType().Name] = data;
                 }
-                
+
                 TContextModel context = new TContextModel();
                 _stackedContexts.Add(context);
 
@@ -70,27 +70,37 @@ namespace ppl.ContextSystem
                     context.RegisterContextData(contextData);
                     accumulatedContextDatas.Add(contextData.GetType().Name, contextData);
                 }
-                
-                if(disposeCurrent && _stackedContexts.Count > 0)
+
+                if (disposeCurrent && _stackedContexts.Count > 0)
                     _stackedContexts[^2].Dispose();
 
                 context.Start(new ContextArgs(accumulatedContextDatas));
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Debug.LogError("Could not spread context data. Error below");
                 Debug.LogException(e);
             }
-            
+
         }
 
         public static void PopContext()
         {
-            if(_stackedContexts.Count == 0)
+            if (_stackedContexts.Count == 0)
                 return;
-            
+
             _stackedContexts.Last().Dispose();
             _stackedContexts.RemoveAt(_stackedContexts.Count - 1);
+
+            Dictionary<string, IContextData> accumulatedContextDatas = new Dictionary<string, IContextData>();
+            foreach (var ctx in _stackedContexts)
+            {
+                var data = ctx.GetContextData();
+                if (data != null)
+                    accumulatedContextDatas[data.GetType().Name] = data;
+            }
+
+            _stackedContexts[^1].Start(new ContextArgs(accumulatedContextDatas));
         }
     }
 }
