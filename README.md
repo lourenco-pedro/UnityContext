@@ -7,7 +7,6 @@ A flexible context management system for Unity that provides a structured way to
 - **Stack-based Context Management**: Push and pop contexts to manage different application states
 - **Data Sharing**: Share data between contexts through `IContextData` interfaces
 - **Context Lifecycle**: Built-in lifecycle methods (`Start`, `Update`, `Dispose`)
-- **Observable Updates**: Integrates with R3 for reactive update loops
 - **Type-safe Data Access**: Generic methods for retrieving context data with compile-time safety
 
 ## Installation
